@@ -1,7 +1,3 @@
-// Copyright 2019 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:flutter_clock_helper/model.dart';
@@ -26,19 +22,16 @@ final _darkTheme = {
   _Element.shadow: Color(0xFF174EA6),
 };
 
-/// A basic digital clock.
-///
-/// You can do better than this!
-class DigitalClock extends StatefulWidget {
-  const DigitalClock(this.model);
+class OutrunClock extends StatefulWidget {
+  const OutrunClock(this.model);
 
   final ClockModel model;
 
   @override
-  _DigitalClockState createState() => _DigitalClockState();
+  _OutrunClockState createState() => _OutrunClockState();
 }
 
-class _DigitalClockState extends State<DigitalClock> {
+class _OutrunClockState extends State<OutrunClock> {
   DateTime _dateTime = DateTime.now();
   Timer _timer;
 
@@ -51,7 +44,7 @@ class _DigitalClockState extends State<DigitalClock> {
   }
 
   @override
-  void didUpdateWidget(DigitalClock oldWidget) {
+  void didUpdateWidget(OutrunClock oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.model != oldWidget.model) {
       oldWidget.model.removeListener(_updateModel);
@@ -105,11 +98,11 @@ class _DigitalClockState extends State<DigitalClock> {
     final offset = -fontSize / 7;
     final defaultStyle = TextStyle(
       color: colors[_Element.text],
-      fontFamily: 'PressStart2P',
+      fontFamily: 'Exo',
       fontSize: fontSize,
       shadows: [
         Shadow(
-          blurRadius: 0,
+          blurRadius: 10,
           color: colors[_Element.shadow],
           offset: Offset(10, 0),
         ),
@@ -118,14 +111,18 @@ class _DigitalClockState extends State<DigitalClock> {
 
     return Container(
       color: colors[_Element.background],
-      child: Center(
-        child: DefaultTextStyle(
-          style: defaultStyle,
-          child: Stack(
-            children: <Widget>[
-              Positioned(left: offset, top: 0, child: Text(hour)),
-              Positioned(right: offset, bottom: offset, child: Text(minute)),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: DefaultTextStyle(
+            style: defaultStyle,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(hour),
+                Text(minute),
+              ],
+            ),
           ),
         ),
       ),
